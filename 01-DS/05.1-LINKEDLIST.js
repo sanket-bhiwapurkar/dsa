@@ -57,7 +57,8 @@ class LinkedList {
     }
   } //O(1)
   insert(index, val) {
-    if (index <= 0) return this.shift(val);
+    if (index <= 0) return this.unshift(val);
+    if (index >= this.length) return this.push(val);
     let newNode = new Node(val);
     let pointer = this.traverseToIndex(index - 1);
     const temp = pointer.next;
@@ -66,7 +67,7 @@ class LinkedList {
     this.length++;
   } //O(n)
   remove(index) {
-    if (index === 0) return this.unshift();
+    if (index === 0) return this.shift();
     if (index >= this.length - 1) return this.pop();
     let pointer = this.traverseToIndex(index - 1);
     pointer.next = pointer.next.next;
@@ -96,10 +97,18 @@ class LinkedList {
 
 exports.LinkedList = LinkedList;
 
-// const myLinkedList = new LinkedList(5);
-// myLinkedList.push(10);
-// myLinkedList.push(15);
-// myLinkedList.push(20);
-// console.log(myLinkedList.toArray());
+const myLinkedList = new LinkedList(5);
+myLinkedList.push(10);
+myLinkedList.push(15);
+myLinkedList.push(20);
+console.log(myLinkedList.toArray());
+myLinkedList.pop()
+myLinkedList.shift()
+console.log(myLinkedList.toArray());
+myLinkedList.unshift(5)
+myLinkedList.unshift(0)
+console.log(myLinkedList.toArray());
+myLinkedList.remove(2)
+myLinkedList.insert(1, 3)
 // myLinkedList.slice(1, 3);
-// console.log(myLinkedList.toArray());
+console.log(myLinkedList.toArray());
