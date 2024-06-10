@@ -94,6 +94,8 @@ class LinkedList {
   } //O(n)
 }
 
+exports.LinkedList = LinkedList;
+
 // const myLinkedList = new LinkedList(5);
 // myLinkedList.push(10);
 // myLinkedList.push(15);

@@ -1,7 +1,7 @@
 const { Node } = require("./05.1-LINKEDLIST.js");
 
 class Queue {
-  constructor(val) {
+  constructor() {
     this.first = null;
     this.last = null;
     this.length = 0;
