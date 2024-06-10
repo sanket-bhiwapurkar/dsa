@@ -4,6 +4,7 @@ class Node {
     this.next = null;
   }
 }
+exports.Node = Node;
 
 class LinkedList {
   constructor(val) {
@@ -93,10 +94,10 @@ class LinkedList {
   } //O(n)
 }
 
-const myLinkedList = new LinkedList(5);
-myLinkedList.push(10);
-myLinkedList.push(15);
-myLinkedList.push(20);
-console.log(myLinkedList.toArray());
-myLinkedList.slice(1, 3);
-console.log(myLinkedList.toArray());
+// const myLinkedList = new LinkedList(5);
+// myLinkedList.push(10);
+// myLinkedList.push(15);
+// myLinkedList.push(20);
+// console.log(myLinkedList.toArray());
+// myLinkedList.slice(1, 3);
+// console.log(myLinkedList.toArray());
