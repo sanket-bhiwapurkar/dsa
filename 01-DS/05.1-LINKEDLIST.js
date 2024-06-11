@@ -78,7 +78,7 @@ class LinkedList {
     if (startIndex < 0) startIndex = 0;
     if (endIndex > this.length - 1) endIndex = this.length - 1;
     if (startIndex > endIndex)
-      throw new Error("startIndex cannot be greate than endIndex");
+      throw new Error("startIndex cannot be greater than endIndex");
     let startPointer = this.traverseToIndex(startIndex - 1);
     let endPointer = this.traverseToIndex(endIndex);
     startPointer.next = endPointer;
@@ -102,13 +102,13 @@ myLinkedList.push(10);
 myLinkedList.push(15);
 myLinkedList.push(20);
 console.log(myLinkedList.toArray());
-myLinkedList.pop()
-myLinkedList.shift()
+myLinkedList.pop();
+myLinkedList.shift();
 console.log(myLinkedList.toArray());
-myLinkedList.unshift(5)
-myLinkedList.unshift(0)
+myLinkedList.unshift(5);
+myLinkedList.unshift(0);
 console.log(myLinkedList.toArray());
-myLinkedList.remove(2)
-myLinkedList.insert(1, 3)
+myLinkedList.remove(2);
+myLinkedList.insert(1, 3);
 // myLinkedList.slice(1, 3);
 console.log(myLinkedList.toArray());
