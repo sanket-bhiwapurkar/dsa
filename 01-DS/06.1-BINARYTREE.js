@@ -31,81 +31,44 @@ class BTree {
       }
     }
   }
-  remove(val) {
-    if (!this.root) {
-      return false;
-    }
-    let currentNode = this.root;
-    let parentNode = null;
-    while (currentNode) {
-      if (val < currentNode.val) {
-        parentNode = currentNode;
-        currentNode = currentNode.left;
-      } else if (val > currentNode.val) {
-        parentNode = currentNode;
-        currentNode = currentNode.right;
-      } else if (currentNode.val === val) {
-        //We have a match, get to work!
-
-        //Option 1: No right child:
-        if (currentNode.right === null) {
-          if (parentNode === null) {
-            this.root = currentNode.left;
-          } else {
-            //if parent > current val, make current left child a child of parent
-            if (currentNode.val < parentNode.val) {
-              parentNode.left = currentNode.left;
-
-              //if parent < current val, make left child a right child of parent
-            } else if (currentNode.val > parentNode.val) {
-              parentNode.right = currentNode.left;
-            }
-          }
-
-          //Option 2: Right child which doesnt have a left child
-        } else if (currentNode.right.left === null) {
-          currentNode.right.left = currentNode.left;
-          if (parentNode === null) {
-            this.root = currentNode.right;
-          } else {
-            //if parent > current, make right child of the left the parent
-            if (currentNode.val < parentNode.val) {
-              parentNode.left = currentNode.right;
-
-              //if parent < current, make right child a right child of the parent
-            } else if (currentNode.val > parentNode.val) {
-              parentNode.right = currentNode.right;
-            }
-          }
-
-          //Option 3: Right child that has a left child
-        } else {
-          //find the Right child's left most child
-          let leftmost = currentNode.right.left;
-          let leftmostParent = currentNode.right;
-          while (leftmost.left !== null) {
-            leftmostParent = leftmost;
-            leftmost = leftmost.left;
-          }
-
-          //Parent's left subtree is now leftmost's right subtree
-          leftmostParent.left = leftmost.right;
-          leftmost.left = currentNode.left;
-          leftmost.right = currentNode.right;
-
-          if (parentNode === null) {
-            this.root = leftmost;
-          } else {
-            if (currentNode.val < parentNode.val) {
-              parentNode.left = leftmost;
-            } else if (currentNode.val > parentNode.val) {
-              parentNode.right = leftmost;
-            }
-          }
+  remove(val, root = this.root, parentPointer = null) {
+    if (!root) return -1;
+    let pointer = root;
+    while (pointer) {
+      if (val < pointer.val) {
+        parentPointer = pointer;
+        pointer = pointer.left;
+      } else if (val > pointer.val) {
+        parentPointer = pointer;
+        pointer = pointer.right;
+      } else if (val === pointer.val) {
+        if (!pointer.left && !pointer.right) {
+          val < parentPointer.val
+            ? (parentPointer.left = null)
+            : (parentPointer.right = null);
+          return;
         }
-        return true;
+        if (!pointer.left && pointer.right) {
+          pointer.right.val < parentPointer.val
+            ? (parentPointer.left = pointer.right)
+            : (parentPointer.right = pointer.right);
+          return;
+        }
+        if (pointer.left && !pointer.right) {
+          pointer.left.val < parentPointer.val
+            ? (parentPointer.left = pointer.left)
+            : (parentPointer.right = pointer.left);
+          return;
+        }
+        let leftmost = pointer.right;
+        while (leftmost && leftmost.left) {
+          leftmost = leftmost.left;
+        }
+        pointer.val = leftmost.val;
+        return this.remove(leftmost.val, pointer.right, pointer);
       }
     }
+    return -1;
   }
 
   lookup(val) {
@@ -121,15 +84,20 @@ class BTree {
   traverseToNode(val) {}
 }
 
-const btree = new BTree(50);
-btree.insert(40);
-btree.insert(60);
-btree.insert(30);
-btree.insert(45);
-btree.insert(70);
+const btree = new BTree(8);
+btree.insert(4);
+btree.insert(12);
+btree.insert(2);
+btree.insert(6);
+btree.insert(10);
+btree.insert(14);
 btree.insert(1);
-btree.insert(65);
-console.log(JSON.stringify(btree));
-btree.remove(70);
-
+btree.insert(3);
+btree.insert(5);
+btree.insert(7);
+btree.insert(9);
+btree.insert(11);
+btree.insert(13);
+btree.insert(15);
+btree.remove(4);
 console.log(JSON.stringify(btree));
